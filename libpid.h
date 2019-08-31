@@ -1,3 +1,12 @@
+#ifndef __LIBPID_H__
+#define __LIBPID_H__
+
+/*
+#ifdef __cplusplus
+extern "C" {
+#endif
+*/
+
 #define Forward 1
 #define Backward 2
 #define Trapezoidal 3
@@ -48,8 +57,12 @@ double get_setpoint(pidc_t *pidp);
 void set_actuator_limit(pidc_t *pidp,double minima,double maxima);
 void set_input_range(pidc_t *pidp,double minima,double maxima);
 
-void auto_tune(par_t *parp,
-               double (*fbp)(void),
-               void (*rtp)(double ref),
-               double Tmax,
-               double Ts );
+void auto_tune(par_t *parp, double (*fbp)(void), void (*rtp)(double ref), double Tmax, double Ts );
+
+/*
+#ifdef __cplusplus
+}
+#endif
+*/
+
+#endif // __LIBPID_H__
