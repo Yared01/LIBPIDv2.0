@@ -164,7 +164,7 @@ double integral(pidc_t *pidp, double K, double Ti, double Tt, double Ts, char
 method)
 {
 
-	double cik;
+	double cik = 0;
 	double eik = pidp->ek;		
 
 	switch(method){
@@ -266,36 +266,32 @@ void auto_tune(par_t *parp,
 	double ykm1 = y0;
 	double ysmax = 0.0, tsmax = 0.0;
 	double yss = 0.0, yk = 0.0;
-	double tss = Tmax;
+
 	double T63;
 	double smax = 0, s = 0;
-	uint32_t i=0, j=0;
-	unsigned long time = 0;
+	uint32_t i;
+
 
 	for ( i = 1; i < max_ns; i++ )
-	{	
-		// The clock return time in micro-seconds
-		time = clock();
+	{
 
 		yk = fbp();
 		data[i] = yk;
 		s = (yk - ykm1) / Ts;
 
-		if ( s > smax  )
-		{
+		if ( s > smax  ){
 			smax = s;
 			tsmax = Ts * (i - 1);
 			ysmax = ykm1;			
 		}
 
 		// At steady-state,  ess < 2% or 5%
-		if ( s*Ts <= 0.00002)
-		{
+		if ( s*Ts <= 0.00002){
 			yss = yk;
 			break; 
 		}
 		/* wait until the sampling time is reached */
-		while((clock() - time) < Ts*1000);
+		delay(Ts);
 
 	}
 
@@ -318,15 +314,13 @@ void auto_tune(par_t *parp,
 	double Td = (0.5*L*T)/(0.3*L + T);
 
 	// Set pid parameters
-        parp->kp = Kp;
-	parp->ki = Kp/Ti;
-	parp->kd = Td*Kp;
+    parp->kp = K;
+	parp->ki = K/Ti;
+	parp->kd = Td*K;
         
-        // The rest is set to default value of matlab
-        parp->n = 100;
-        parp->b = 1;
-        parp->c = 1;
-
-        
+    // The rest is set to default value of matlab
+    parp->n = 100;
+    parp->b = 1;
+    parp->c = 1;       
 }
 
