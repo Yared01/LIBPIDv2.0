@@ -22,10 +22,10 @@
 #include <stdint.h>
 #include "libpid.h" 
 
-// For arduino ide compatability you can include it in your .ino files as follows
-// extern "C" { 
-// #include "libpid.h" 
-// }
+////For arduino ide compatability you can include it in your .ino files as follows
+////extern "C" { 
+////#include "libpid.h" 
+////}
 #include "Arduino.h"
 
 /* change this with time function of mcu ide */
